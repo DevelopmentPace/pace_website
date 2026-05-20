@@ -1,0 +1,1848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PACE – Pacific Autism Center for Education</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue:        #97b7e4;
+  --blue-dark:   #6a9bd4;
+  --blue-deeper: #2e6db4;
+  --blue-pale:   #e8f1fb;
+  --orange:      #ff9954;
+  --orange-dark: #e07830;
+  --orange-pale: #fff1e8;
+  --grey:        #8a8e8e;
+  --grey-light:  #f5f5f5;
+  --grey-mid:    #d4d6d6;
+  --navy:        #1c2b3a;
+  --navy-mid:    #2e4460;
+  --white:       #ffffff;
+  --sand:        #faf8f5;
+  --text:        #1c2b3a;
+  --text-muted:  #5c6b7a;
+  --border:      #e2e8f0;
+  --font-display:'Playfair Display', Georgia, serif;
+  --font-body:   'Plus Jakarta Sans', system-ui, sans-serif;
+  --radius:      10px;
+  --radius-lg:   16px;
+  --shadow:      0 4px 24px rgba(28,43,58,.08);
+  --shadow-lg:   0 12px 48px rgba(28,43,58,.14);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  color: var(--text);
+  background: var(--white);
+  overflow-x: hidden;
+}
+
+/* ── PAGE ROUTER ── */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ── NAV ── */
+.site-nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255,255,255,.95);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  transition: box-shadow .2s;
+}
+.site-nav.scrolled { box-shadow: 0 2px 20px rgba(28,43,58,.1); }
+.nav-inner {
+  max-width: 1200px; margin: 0 auto; padding: 0 32px;
+  display: flex; align-items: center; gap: 32px; height: 68px;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--font-display); font-weight: 700; font-size: 1.1rem;
+  color: var(--navy); text-decoration: none; flex-shrink: 0;
+  cursor: pointer;
+}
+.nav-logo .logo-mark {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: var(--blue); display: grid; place-items: center;
+  font-size: 1rem; font-weight: 700; color: var(--white);
+  font-family: var(--font-display);
+}
+.nav-links {
+  display: flex; align-items: center; gap: 4px; margin-left: auto;
+}
+.nav-link {
+  padding: 8px 14px; border-radius: 6px;
+  font-size: .875rem; font-weight: 500; color: var(--text-muted);
+  text-decoration: none; cursor: pointer; border: none; background: none;
+  font-family: var(--font-body); transition: all .15s;
+}
+.nav-link:hover { color: var(--navy); background: var(--blue-pale); }
+.nav-link.active { color: var(--blue-deeper); background: var(--blue-pale); }
+.nav-cta {
+  margin-left: 8px; padding: 10px 22px;
+  background: var(--orange); color: var(--white);
+  border-radius: 8px; font-weight: 600; font-size: .875rem;
+  cursor: pointer; border: none; font-family: var(--font-body);
+  transition: background .15s, transform .1s;
+}
+.nav-cta:hover { background: var(--orange-dark); transform: translateY(-1px); }
+
+/* ── SHARED LAYOUT ── */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+.section { padding: 88px 0; }
+.section--sand { background: var(--sand); }
+.section--navy { background: var(--navy); }
+.section--blue { background: var(--blue-pale); }
+.eyebrow {
+  display: inline-block;
+  font-size: .72rem; font-weight: 700; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--orange); margin-bottom: 14px;
+}
+h2 {
+  font-family: var(--font-display); font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 700; line-height: 1.15; color: var(--navy);
+}
+h3 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 600; color: var(--navy); }
+p { line-height: 1.7; color: var(--text-muted); }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 13px 26px; border-radius: 8px;
+  font-family: var(--font-body); font-size: .9rem; font-weight: 600;
+  text-decoration: none; cursor: pointer; border: none;
+  transition: all .2s; white-space: nowrap;
+}
+.btn--primary { background: var(--orange); color: var(--white); }
+.btn--primary:hover { background: var(--orange-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,153,84,.3); }
+.btn--blue { background: var(--blue); color: var(--navy); }
+.btn--blue:hover { background: var(--blue-dark); transform: translateY(-2px); }
+.btn--outline { background: transparent; color: var(--navy); border: 2px solid var(--border); }
+.btn--outline:hover { border-color: var(--blue); color: var(--blue-deeper); background: var(--blue-pale); }
+.btn--white { background: var(--white); color: var(--navy); }
+.btn--white:hover { background: var(--blue-pale); transform: translateY(-2px); }
+.btn--ghost { background: rgba(255,255,255,.15); color: var(--white); border: 1.5px solid rgba(255,255,255,.4); }
+.btn--ghost:hover { background: rgba(255,255,255,.25); }
+
+/* ══════════════════════════════════════
+   HOME PAGE
+══════════════════════════════════════ */
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 50%, #1a4070 100%);
+  position: relative; overflow: hidden;
+  padding: 100px 0 120px;
+  min-height: 85vh;
+  display: flex; align-items: center;
+}
+.hero-bg-circles {
+  position: absolute; inset: 0; pointer-events: none;
+}
+.hero-circle {
+  position: absolute; border-radius: 50%;
+  border: 1px solid rgba(151,183,228,.12);
+}
+.hero-circle.c1 { width: 600px; height: 600px; top: -200px; right: -150px; }
+.hero-circle.c2 { width: 400px; height: 400px; top: -100px; right: 50px; }
+.hero-circle.c3 { width: 300px; height: 300px; bottom: -100px; left: -80px; }
+.hero-blob {
+  position: absolute;
+  background: var(--blue); opacity: .07; border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+}
+.hero-blob.b1 { width: 500px; height: 500px; top: -100px; right: -100px; }
+.hero-blob.b2 { width: 300px; height: 300px; bottom: -80px; left: 10%; animation: morph 10s ease-in-out infinite; }
+@keyframes morph {
+  0%,100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+}
+.hero-inner {
+  display: grid; grid-template-columns: 1fr 440px;
+  gap: 80px; align-items: center; position: relative; z-index: 1;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-size: .7rem; font-weight: 700; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--blue); margin-bottom: 24px;
+}
+.hero-eyebrow::before { content: ''; width: 36px; height: 2px; background: var(--blue); }
+.hero h1 {
+  font-family: var(--font-display); font-size: clamp(2.4rem, 5vw, 3.8rem);
+  font-weight: 700; line-height: 1.1; color: var(--white); margin-bottom: 24px;
+}
+.hero h1 .accent { color: var(--blue); font-style: italic; }
+.hero h1 .accent-orange { color: var(--orange); }
+.hero-desc {
+  font-size: 1.05rem; color: rgba(255,255,255,.72);
+  max-width: 480px; margin-bottom: 40px; line-height: 1.75;
+}
+.hero-btns { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 48px; }
+.hero-stats { display: flex; gap: 36px; }
+.hero-stat-val {
+  font-family: var(--font-display); font-size: 1.8rem; font-weight: 700;
+  color: var(--white); line-height: 1;
+}
+.hero-stat-label { font-size: .72rem; color: rgba(255,255,255,.5); margin-top: 4px; letter-spacing: .06em; }
+
+/* Hero right panel — cards */
+.hero-cards { position: relative; }
+.hero-card {
+  background: rgba(255,255,255,.08);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: var(--radius-lg); padding: 20px 24px;
+  margin-bottom: 14px;
+  transform: translateX(0);
+  animation: slideIn .5s ease both;
+}
+.hero-card:nth-child(2) { animation-delay: .1s; margin-left: 24px; }
+.hero-card:nth-child(3) { animation-delay: .2s; }
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.hero-card-icon { font-size: 1.5rem; margin-bottom: 8px; display: block; }
+.hero-card-title { font-size: .95rem; font-weight: 600; color: var(--white); margin-bottom: 4px; }
+.hero-card-desc { font-size: .78rem; color: rgba(255,255,255,.55); }
+.hero-card-tag {
+  display: inline-block; margin-top: 10px;
+  background: rgba(151,183,228,.2); color: var(--blue);
+  padding: 3px 10px; border-radius: 20px; font-size: .7rem; font-weight: 600;
+}
+
+/* PROGRAMS OVERVIEW */
+.programs-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+}
+.prog-card {
+  background: var(--white); border-radius: var(--radius-lg);
+  border: 1.5px solid var(--border); padding: 28px 24px;
+  cursor: pointer; transition: all .25s;
+  position: relative; overflow: hidden;
+}
+.prog-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: var(--blue); transform: scaleX(0); transform-origin: left;
+  transition: transform .25s;
+}
+.prog-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: var(--blue); }
+.prog-card:hover::before { transform: scaleX(1); }
+.prog-card.highlight { background: var(--blue); border-color: var(--blue); }
+.prog-card.highlight .prog-name,
+.prog-card.highlight .prog-ages { color: var(--white); }
+.prog-card.highlight .prog-desc { color: rgba(255,255,255,.75); }
+.prog-card.highlight::before { display: none; }
+.prog-icon-wrap {
+  width: 52px; height: 52px; border-radius: 12px;
+  background: var(--blue-pale); display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; margin-bottom: 16px;
+}
+.prog-card.highlight .prog-icon-wrap { background: rgba(255,255,255,.2); }
+.prog-ages {
+  font-size: .7rem; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--orange); margin-bottom: 8px;
+}
+.prog-name { font-size: 1.05rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+.prog-desc { font-size: .82rem; color: var(--text-muted); line-height: 1.6; }
+.prog-arrow {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: .78rem; font-weight: 600; color: var(--blue-deeper);
+  margin-top: 14px; text-decoration: none; cursor: pointer;
+  transition: gap .15s;
+}
+.prog-arrow:hover { gap: 10px; }
+.prog-card.highlight .prog-arrow { color: rgba(255,255,255,.85); }
+
+/* MISSION STRIP */
+.mission-strip {
+  background: var(--blue); padding: 64px 0;
+  position: relative; overflow: hidden;
+}
+.mission-strip::before {
+  content: 'CSE';
+  position: absolute; right: -40px; top: 50%; transform: translateY(-50%);
+  font-family: var(--font-display); font-size: 15rem; font-weight: 700;
+  color: rgba(255,255,255,.04); line-height: 1; pointer-events: none;
+}
+.mission-pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
+.mission-pillar {
+  padding: 32px 40px; text-align: center;
+  border-right: 1px solid rgba(255,255,255,.15);
+  position: relative;
+}
+.mission-pillar:last-child { border-right: none; }
+.mission-pillar-num {
+  font-family: var(--font-display); font-size: 3.5rem; font-weight: 700;
+  color: rgba(255,255,255,.15); line-height: 1; margin-bottom: -20px;
+}
+.mission-pillar-word {
+  font-family: var(--font-display); font-size: 2rem; font-weight: 700;
+  color: var(--white); margin-bottom: 10px;
+}
+.mission-pillar-desc { font-size: .85rem; color: rgba(255,255,255,.65); }
+
+/* IMPACT STATS */
+.impact-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; }
+.impact-box {
+  text-align: center; padding: 36px 24px;
+  background: var(--white); border-radius: var(--radius-lg);
+  border: 1.5px solid var(--border); position: relative;
+  transition: all .2s;
+}
+.impact-box:hover { border-color: var(--blue); box-shadow: var(--shadow); }
+.impact-num {
+  font-family: var(--font-display); font-size: 3rem; font-weight: 700;
+  color: var(--blue-deeper); line-height: 1; margin-bottom: 8px;
+}
+.impact-num span { color: var(--orange); }
+.impact-label { font-size: .82rem; font-weight: 500; color: var(--text-muted); }
+
+/* ABOUT MINI */
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+.about-visual {
+  position: relative;
+}
+.about-card-stack { position: relative; }
+.about-main-card {
+  background: var(--navy); border-radius: var(--radius-lg); padding: 40px;
+  color: white; position: relative; overflow: hidden;
+}
+.about-main-card::before {
+  content: ''; position: absolute;
+  width: 300px; height: 300px; border-radius: 50%;
+  background: var(--blue); opacity: .1;
+  bottom: -80px; right: -80px;
+}
+.about-year {
+  font-family: var(--font-display); font-size: 5rem; font-weight: 700;
+  color: rgba(255,255,255,.08); line-height: 1; margin-bottom: -24px;
+}
+.about-since { font-size: .8rem; letter-spacing: .16em; text-transform: uppercase; color: var(--blue); }
+.about-big { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--white); margin: 12px 0; }
+.about-sub { font-size: .88rem; color: rgba(255,255,255,.6); }
+.about-accent-card {
+  background: var(--orange); border-radius: var(--radius-lg); padding: 24px;
+  margin-top: -20px; margin-right: -20px; margin-left: 40px;
+  color: white;
+}
+.about-accent-val { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--white); }
+.about-accent-label { font-size: .78rem; color: rgba(255,255,255,.75); }
+.accred-badges { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+.accred-badge {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--blue-pale); border: 1px solid var(--border);
+  border-radius: 8px; padding: 10px 16px;
+  font-size: .78rem; font-weight: 600; color: var(--navy);
+}
+.accred-badge .badge-ico { font-size: 1rem; }
+
+/* FEATURED RESOURCES */
+.resources-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+.resource-card {
+  background: var(--white); border-radius: var(--radius-lg);
+  border: 1.5px solid var(--border); overflow: hidden;
+  transition: all .2s; cursor: pointer;
+}
+.resource-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.resource-thumb {
+  height: 120px; display: flex; align-items: center; justify-content: center;
+  font-size: 3rem; position: relative; overflow: hidden;
+}
+.rt-blue { background: var(--blue-pale); }
+.rt-orange { background: var(--orange-pale); }
+.rt-sand { background: var(--sand); }
+.resource-body { padding: 22px; }
+.resource-tag {
+  font-size: .68rem; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--orange); margin-bottom: 8px;
+}
+.resource-title { font-size: .95rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; line-height: 1.3; }
+.resource-author { font-size: .78rem; color: var(--text-muted); }
+
+/* GET INVOLVED MINI */
+.involve-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+.involve-card {
+  border-radius: var(--radius-lg); padding: 36px 28px;
+  position: relative; overflow: hidden; cursor: pointer;
+  transition: transform .2s, box-shadow .2s;
+}
+.involve-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+.ic-blue { background: var(--blue); }
+.ic-orange { background: var(--orange); }
+.ic-navy { background: var(--navy); }
+.involve-icon { font-size: 2.4rem; display: block; margin-bottom: 20px; }
+.involve-title { font-size: 1.3rem; font-weight: 700; color: var(--white); margin-bottom: 10px; font-family: var(--font-display); }
+.involve-desc { font-size: .85rem; color: rgba(255,255,255,.7); margin-bottom: 20px; }
+.involve-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--white); font-size: .85rem; font-weight: 600;
+  text-decoration: none; cursor: pointer;
+}
+.involve-bg-num {
+  position: absolute; right: -20px; bottom: -30px;
+  font-family: var(--font-display); font-size: 9rem; font-weight: 700;
+  color: rgba(255,255,255,.06); line-height: 1; pointer-events: none;
+}
+
+/* CTA BAND */
+.cta-band {
+  background: var(--navy); padding: 80px 0; position: relative; overflow: hidden;
+}
+.cta-band::before {
+  content: ''; position: absolute;
+  width: 600px; height: 600px; border-radius: 50%;
+  background: var(--blue); opacity: .05;
+  top: -200px; right: -100px;
+}
+.cta-inner { text-align: center; position: relative; z-index: 1; }
+.cta-band h2 { color: var(--white); margin-bottom: 16px; }
+.cta-band p { color: rgba(255,255,255,.6); max-width: 500px; margin: 0 auto 36px; }
+.cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+/* FOOTER */
+.site-footer {
+  background: #111c28; padding: 64px 0 32px;
+}
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+.footer-brand-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+.footer-logo-mark {
+  width: 32px; height: 32px; border-radius: 7px;
+  background: var(--blue); display: grid; place-items: center;
+  font-family: var(--font-display); font-weight: 700; font-size: .95rem; color: var(--white);
+}
+.footer-brand-name { font-family: var(--font-display); font-weight: 700; color: var(--white); }
+.footer-tagline { font-size: .82rem; color: rgba(255,255,255,.4); line-height: 1.6; margin-bottom: 20px; }
+.footer-social { display: flex; gap: 10px; }
+.social-btn {
+  width: 34px; height: 34px; border-radius: 8px;
+  background: rgba(255,255,255,.08); display: grid; place-items: center;
+  font-size: .85rem; color: rgba(255,255,255,.5); cursor: pointer;
+  transition: all .15s; text-decoration: none;
+}
+.social-btn:hover { background: var(--blue); color: var(--white); }
+.footer-col h4 { font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.35); margin-bottom: 16px; }
+.footer-col a {
+  display: block; font-size: .85rem; color: rgba(255,255,255,.55);
+  text-decoration: none; margin-bottom: 10px; cursor: pointer;
+  transition: color .15s;
+}
+.footer-col a:hover { color: var(--white); }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,.08); padding-top: 24px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: .78rem; color: rgba(255,255,255,.3);
+}
+
+/* ══════════════════════════════════════
+   PAGE HERO (shared)
+══════════════════════════════════════ */
+.page-hero {
+  padding: 80px 0; position: relative; overflow: hidden;
+}
+.page-hero h1 {
+  font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 700; line-height: 1.1; color: var(--white); margin-bottom: 16px;
+}
+.page-hero p { max-width: 520px; font-size: 1.05rem; color: rgba(255,255,255,.72); }
+.ph-blue { background: linear-gradient(140deg, var(--navy) 0%, var(--navy-mid) 60%, #1a4070 100%); }
+.ph-orange { background: linear-gradient(140deg, #b85000 0%, var(--orange-dark) 60%, var(--orange) 100%); }
+.ph-teal { background: linear-gradient(140deg, #1a4070 0%, var(--blue-deeper) 60%, var(--blue-dark) 100%); }
+.ph-deco {
+  position: absolute; right: -60px; top: -80px;
+  width: 400px; height: 400px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.07); pointer-events: none;
+}
+.ph-deco2 {
+  position: absolute; right: 60px; top: -20px;
+  width: 250px; height: 250px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.05); pointer-events: none;
+}
+
+/* ══════════════════════════════════════
+   ABOUT PAGE
+══════════════════════════════════════ */
+.timeline { padding-left: 32px; position: relative; }
+.timeline::before {
+  content: ''; position: absolute; left: 8px; top: 8px; bottom: 8px;
+  width: 2px; background: linear-gradient(to bottom, var(--blue), var(--orange));
+}
+.timeline-item { position: relative; margin-bottom: 36px; }
+.timeline-dot {
+  position: absolute; left: -28px; top: 6px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--blue); border: 2px solid var(--white);
+  box-shadow: 0 0 0 3px var(--blue-pale);
+}
+.tl-year { font-size: .7rem; font-weight: 700; color: var(--orange); letter-spacing: .1em; margin-bottom: 4px; }
+.timeline-item h3 { font-size: 1rem; color: var(--navy); margin-bottom: 4px; }
+.timeline-item p { font-size: .84rem; }
+
+.values-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+.value-card {
+  padding: 28px; border-radius: var(--radius-lg);
+  border: 1.5px solid var(--border); background: var(--white);
+  border-left: 4px solid var(--blue);
+  transition: box-shadow .2s;
+}
+.value-card:hover { box-shadow: var(--shadow); }
+.value-ico { font-size: 1.6rem; margin-bottom: 12px; }
+.value-card h4 { font-size: .95rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+.value-card p { font-size: .82rem; }
+
+.leader-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+.leader-card {
+  text-align: center; padding: 24px 16px;
+  border-radius: var(--radius-lg); border: 1.5px solid var(--border);
+  background: var(--white); transition: all .2s;
+}
+.leader-card:hover { box-shadow: var(--shadow); border-color: var(--blue); }
+.leader-avatar {
+  width: 60px; height: 60px; border-radius: 50%;
+  background: var(--blue-pale); color: var(--blue-deeper);
+  display: grid; place-items: center;
+  font-family: var(--font-display); font-size: 1rem; font-weight: 700;
+  margin: 0 auto 12px;
+}
+.leader-card h4 { font-size: .88rem; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+.leader-card p { font-size: .75rem; }
+
+.accred-row { display: flex; gap: 16px; flex-wrap: wrap; }
+.accred-item {
+  flex: 1; min-width: 200px;
+  background: var(--blue-pale); border-radius: var(--radius-lg); padding: 24px;
+  display: flex; align-items: center; gap: 16px;
+}
+.accred-item .a-ico { font-size: 2rem; }
+.accred-item h4 { font-size: .9rem; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+.accred-item p { font-size: .78rem; }
+
+/* ══════════════════════════════════════
+   PROGRAMS PAGE
+══════════════════════════════════════ */
+.lifecycle {
+  display: flex; align-items: stretch; border-radius: var(--radius-lg); overflow: hidden;
+  box-shadow: var(--shadow-lg); margin-bottom: 48px;
+}
+.lifecycle-step { flex: 1; padding: 28px 20px; text-align: center; position: relative; }
+.lifecycle-step::after { content: '›'; position: absolute; right: -10px; top: 50%; transform: translateY(-50%); font-size: 1.4rem; color: rgba(255,255,255,.4); z-index: 2; }
+.lifecycle-step:last-child::after { display: none; }
+.lc1 { background: #1c3a5c; }
+.lc2 { background: var(--blue-deeper); }
+.lc3 { background: var(--blue-dark); }
+.lc4 { background: var(--blue); }
+.lc-age { font-size: .65rem; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.55); margin-bottom: 6px; }
+.lc-icon { font-size: 1.8rem; display: block; margin-bottom: 8px; }
+.lc-name { font-family: var(--font-display); font-size: .95rem; font-weight: 600; color: var(--white); }
+
+.prog-details { display: flex; flex-direction: column; gap: 20px; }
+.prog-detail-card {
+  display: grid; grid-template-columns: 80px 1fr; gap: 28px;
+  padding: 32px; border-radius: var(--radius-lg);
+  border: 1.5px solid var(--border); background: var(--white);
+  transition: all .2s;
+}
+.prog-detail-card:hover { box-shadow: var(--shadow-lg); border-color: var(--blue); }
+.prog-icon-big {
+  width: 80px; height: 80px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem; flex-shrink: 0;
+}
+.pi-blue { background: var(--blue-pale); }
+.pi-orange { background: var(--orange-pale); }
+.pi-sand { background: var(--sand); }
+.prog-badge {
+  display: inline-block; font-size: .68rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+  padding: 4px 12px; border-radius: 20px;
+  background: var(--blue-pale); color: var(--blue-deeper); margin-bottom: 8px;
+}
+.prog-detail-card h3 { font-size: 1.2rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+.prog-detail-card p { font-size: .88rem; margin-bottom: 12px; }
+.prog-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.prog-tag {
+  font-size: .75rem; background: var(--grey-light); padding: 4px 12px;
+  border-radius: 20px; color: var(--navy); font-weight: 500;
+}
+
+/* ══════════════════════════════════════
+   RESOURCES PAGE
+══════════════════════════════════════ */
+.art-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+.art-card {
+  border-radius: var(--radius-lg); border: 1.5px solid var(--border);
+  overflow: hidden; background: var(--white); transition: all .2s; cursor: pointer;
+}
+.art-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.art-thumb { height: 130px; display: flex; align-items: center; justify-content: center; font-size: 3rem; }
+.at-blue { background: var(--blue-pale); }
+.at-orange { background: var(--orange-pale); }
+.at-sand { background: var(--sand); }
+.at-green { background: #eaf5ec; }
+.at-purple { background: #f0eaf7; }
+.art-body { padding: 20px; }
+.art-tag { font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--blue-deeper); margin-bottom: 8px; }
+.art-title { font-size: .95rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; line-height: 1.35; }
+.art-meta { font-size: .75rem; color: var(--grey); }
+
+.filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px; }
+.filter-chip {
+  padding: 8px 18px; border-radius: 24px; font-size: .8rem; font-weight: 600;
+  border: 1.5px solid var(--border); background: var(--white); color: var(--text-muted);
+  cursor: pointer; transition: all .15s; font-family: var(--font-body);
+}
+.filter-chip:hover, .filter-chip.active { background: var(--blue); border-color: var(--blue); color: var(--white); }
+
+.resource-hub { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 48px; }
+.rhub-card {
+  display: flex; gap: 20px; padding: 28px;
+  border-radius: var(--radius-lg); border: 1.5px solid var(--border);
+  background: var(--white); transition: box-shadow .2s;
+}
+.rhub-card:hover { box-shadow: var(--shadow); }
+.rhub-ico { font-size: 2rem; flex-shrink: 0; }
+.rhub-card h3 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+.rhub-card p { font-size: .84rem; margin-bottom: 12px; }
+
+/* ══════════════════════════════════════
+   GET INVOLVED PAGE
+══════════════════════════════════════ */
+.ways-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-bottom: 48px; }
+.way-card-big {
+  border-radius: var(--radius-lg); overflow: hidden; border: 1.5px solid var(--border);
+  background: var(--white); transition: all .2s;
+}
+.way-card-big:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+.way-header {
+  height: 90px; display: flex; align-items: center; padding: 0 28px; font-size: 2rem;
+}
+.wh-blue { background: var(--blue); }
+.wh-orange { background: var(--orange); }
+.wh-navy { background: var(--navy); }
+.way-body { padding: 24px; }
+.way-body h3 { font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+.way-body p { font-size: .85rem; margin-bottom: 16px; }
+
+.events-list { display: flex; flex-direction: column; gap: 12px; }
+.event-row {
+  display: flex; align-items: center; gap: 20px;
+  padding: 20px 24px; border-radius: var(--radius);
+  border: 1.5px solid var(--border); background: var(--white); transition: box-shadow .2s;
+}
+.event-row:hover { box-shadow: var(--shadow); }
+.event-date {
+  width: 54px; height: 54px; border-radius: 10px;
+  background: var(--blue); color: var(--white);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.ev-month { font-size: .6rem; font-weight: 700; text-transform: uppercase; opacity: .8; }
+.ev-day { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; line-height: 1; }
+.event-info h4 { font-size: .95rem; font-weight: 700; color: var(--navy); margin-bottom: 3px; }
+.event-info p { font-size: .8rem; }
+.event-type {
+  margin-left: auto; font-size: .72rem; padding: 4px 12px; border-radius: 20px;
+  background: var(--blue-pale); color: var(--blue-deeper); font-weight: 600; flex-shrink: 0;
+}
+
+.vol-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+.vol-card {
+  text-align: center; padding: 24px 20px;
+  border-radius: var(--radius-lg); background: var(--white); border: 1.5px solid var(--border);
+}
+.vol-icon { font-size: 2rem; margin-bottom: 10px; display: block; }
+.vol-card h4 { font-size: .9rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+.vol-card p { font-size: .78rem; }
+
+.friends-box {
+  background: var(--blue); border-radius: var(--radius-lg); padding: 48px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
+}
+.friends-box h2 { color: var(--white); }
+.friends-box p { color: rgba(255,255,255,.75); margin-bottom: 20px; }
+.friends-stat { font-family: var(--font-display); font-size: 2.4rem; font-weight: 700; color: var(--white); }
+.friends-stat-label { font-size: .72rem; color: rgba(255,255,255,.6); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 20px; }
+
+/* ══════════════════════════════════════
+   CAREERS PAGE
+══════════════════════════════════════ */
+.culture-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+.culture-card {
+  background: var(--white); border-radius: var(--radius-lg); padding: 24px 20px;
+  border: 1.5px solid var(--border); text-align: center; transition: all .2s;
+}
+.culture-card:hover { border-color: var(--blue); box-shadow: var(--shadow); }
+.cult-ico { font-size: 1.8rem; margin-bottom: 10px; display: block; }
+.culture-card h4 { font-size: .9rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+.culture-card p { font-size: .8rem; }
+
+.benefits-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.benefit-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px; background: var(--white);
+  border-radius: var(--radius); border: 1.5px solid var(--border);
+}
+.benefit-ico { font-size: 1.2rem; flex-shrink: 0; }
+.benefit-row span { font-size: .84rem; font-weight: 500; color: var(--navy); }
+
+.job-card {
+  border: 1.5px solid var(--border); border-radius: var(--radius-lg); padding: 24px 28px;
+  margin-bottom: 12px; display: flex; justify-content: space-between;
+  align-items: center; gap: 20px; background: var(--white);
+  transition: all .2s;
+}
+.job-card:hover { box-shadow: var(--shadow-lg); border-color: var(--blue); }
+.job-dept { font-size: .7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--blue-deeper); margin-bottom: 4px; }
+.job-card h3 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+.job-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.job-tag {
+  font-size: .72rem; padding: 3px 10px; border-radius: 20px;
+  background: var(--grey-light); color: var(--navy); font-weight: 500;
+}
+.apply-btn {
+  flex-shrink: 0; padding: 10px 22px; background: var(--blue); color: var(--white);
+  border-radius: 8px; font-weight: 600; font-size: .82rem; cursor: pointer;
+  border: none; font-family: var(--font-body); white-space: nowrap;
+  transition: background .15s;
+}
+.apply-btn:hover { background: var(--blue-deeper); }
+
+.quote-strip {
+  background: var(--blue-deeper); padding: 56px 0; text-align: center; margin-top: 48px;
+  border-radius: var(--radius-lg);
+}
+.quote-strip blockquote {
+  font-family: var(--font-display); font-size: 1.4rem; font-style: italic;
+  max-width: 680px; margin: 0 auto 14px; color: var(--white);
+}
+.quote-strip cite { font-size: .82rem; color: rgba(255,255,255,.6); font-style: normal; }
+
+/* ══════════════════════════════════════
+   CONTACT PAGE
+══════════════════════════════════════ */
+.contact-layout { display: grid; grid-template-columns: 1fr 400px; gap: 56px; align-items: start; }
+.contact-form { display: flex; flex-direction: column; gap: 16px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.field-group { display: flex; flex-direction: column; gap: 6px; }
+label { font-size: .8rem; font-weight: 600; color: var(--navy); }
+input[type=text], input[type=email], input[type=tel], select, textarea {
+  width: 100%; padding: 13px 16px;
+  border: 1.5px solid var(--border); border-radius: 8px;
+  font-family: var(--font-body); font-size: .88rem;
+  color: var(--navy); background: var(--white); outline: none;
+  transition: border-color .15s;
+}
+input:focus, select:focus, textarea:focus { border-color: var(--blue); }
+textarea { resize: vertical; min-height: 110px; }
+.submit-btn {
+  padding: 15px 32px; background: var(--orange); color: var(--white);
+  border: none; border-radius: 8px; font-family: var(--font-body);
+  font-size: .95rem; font-weight: 700; cursor: pointer; align-self: flex-start;
+  transition: background .15s, transform .1s;
+}
+.submit-btn:hover { background: var(--orange-dark); transform: translateY(-2px); }
+
+.loc-card {
+  border-radius: var(--radius-lg); border: 1.5px solid var(--border); padding: 20px 22px;
+  background: var(--white); margin-bottom: 12px; transition: box-shadow .2s;
+}
+.loc-card:hover { box-shadow: var(--shadow); }
+.loc-card h4 { font-size: .9rem; color: var(--blue-deeper); font-weight: 700; margin-bottom: 4px; }
+.loc-card p { font-size: .82rem; margin-bottom: 4px; }
+.loc-phone { font-weight: 700; font-size: .88rem; color: var(--navy); }
+
+.intake-strip {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 0;
+  border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 48px;
+}
+.intake-step { padding: 28px 20px; text-align: center; position: relative; }
+.intake-step::after { content: '▶'; position: absolute; right: -8px; top: 50%; transform: translateY(-50%); font-size: .8rem; color: rgba(255,255,255,.4); z-index: 2; }
+.intake-step:last-child::after { display: none; }
+.is1 { background: #1c3a5c; }
+.is2 { background: var(--blue-deeper); }
+.is3 { background: var(--blue-dark); }
+.is4 { background: var(--blue); }
+.is-num { font-size: .65rem; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.55); margin-bottom: 4px; }
+.intake-step h4 { font-size: .88rem; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+.intake-step p { font-size: .73rem; color: rgba(255,255,255,.65); }
+
+/* ══════════════════════════════════════
+   DONATE PAGE
+══════════════════════════════════════ */
+.donate-layout { display: grid; grid-template-columns: 1fr 360px; gap: 48px; align-items: start; }
+.freq-tabs {
+  display: flex; gap: 0; border: 1.5px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 20px;
+}
+.freq-tab {
+  flex: 1; padding: 12px; text-align: center; font-weight: 600; font-size: .85rem;
+  cursor: pointer; border: none; background: var(--white); color: var(--text-muted);
+  font-family: var(--font-body); transition: all .15s;
+}
+.freq-tab.active { background: var(--blue); color: var(--white); }
+.amount-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 16px; }
+.amount-btn {
+  padding: 16px; border: 1.5px solid var(--border); border-radius: 8px;
+  text-align: center; cursor: pointer; font-family: var(--font-body);
+  font-size: 1.05rem; font-weight: 700; color: var(--navy); background: var(--white);
+  transition: all .15s;
+}
+.amount-btn:hover, .amount-btn.selected {
+  border-color: var(--blue); color: var(--blue-deeper); background: var(--blue-pale);
+}
+.custom-amt {
+  width: 100%; padding: 14px 16px; border: 1.5px solid var(--border); border-radius: 8px;
+  font-size: .95rem; font-family: var(--font-body); outline: none; margin-bottom: 4px;
+}
+.custom-amt:focus { border-color: var(--blue); }
+.donate-cta {
+  width: 100%; padding: 16px; background: var(--orange); color: var(--white);
+  border: none; border-radius: 8px; font-family: var(--font-body);
+  font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 14px; transition: background .15s;
+}
+.donate-cta:hover { background: var(--orange-dark); }
+.trust-row { display: flex; gap: 12px; margin-top: 14px; flex-wrap: wrap; }
+.trust-badge { display: flex; align-items: center; gap: 6px; font-size: .72rem; color: var(--grey); font-weight: 500; }
+
+.impact-sidebar h3 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 16px; }
+.impact-row {
+  display: flex; align-items: flex-start; gap: 14px; padding: 16px;
+  border-radius: var(--radius); background: var(--blue-pale); margin-bottom: 10px;
+}
+.imp-amt { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; color: var(--blue-deeper); white-space: nowrap; }
+.imp-desc h4 { font-size: .85rem; font-weight: 700; color: var(--navy); margin-bottom: 2px; }
+.imp-desc p { font-size: .78rem; }
+
+.ways-grid-sm { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+.way-sm-card {
+  padding: 24px; border-radius: var(--radius-lg); border: 1.5px solid var(--border);
+  text-align: center; background: var(--white); transition: box-shadow .2s;
+}
+.way-sm-card:hover { box-shadow: var(--shadow); }
+.way-sm-ico { font-size: 1.8rem; margin-bottom: 12px; display: block; }
+.way-sm-card h3 { font-size: .95rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+.way-sm-card p { font-size: .8rem; margin-bottom: 14px; }
+
+.stats-strip {
+  background: var(--navy); padding: 36px 0;
+  display: flex; justify-content: center; gap: 0;
+}
+.stat-block { text-align: center; padding: 0 48px; border-right: 1px solid rgba(255,255,255,.12); }
+.stat-block:last-child { border-right: none; }
+.stat-num { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; color: var(--blue); display: block; }
+.stat-label { font-size: .7rem; color: rgba(255,255,255,.5); text-transform: uppercase; letter-spacing: .1em; }
+
+/* ══════════════════════════════════════
+   ANIMATIONS
+══════════════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp .5s ease both; }
+.fade-up-2 { animation: fadeUp .5s ease .1s both; }
+.fade-up-3 { animation: fadeUp .5s ease .2s both; }
+.fade-up-4 { animation: fadeUp .5s ease .3s both; }
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-cards { display: none; }
+  .programs-grid { grid-template-columns: repeat(2,1fr); }
+  .impact-grid { grid-template-columns: repeat(2,1fr); }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  .container { padding: 0 20px; }
+  .section { padding: 56px 0; }
+  .nav-links .nav-link { display: none; }
+  .programs-grid { grid-template-columns: 1fr; }
+  .about-grid { grid-template-columns: 1fr; }
+  .values-grid { grid-template-columns: 1fr 1fr; }
+  .involve-grid { grid-template-columns: 1fr; }
+  .resources-grid { grid-template-columns: 1fr 1fr; }
+  .culture-grid { grid-template-columns: 1fr 1fr; }
+  .art-grid { grid-template-columns: 1fr 1fr; }
+  .contact-layout { grid-template-columns: 1fr; }
+  .donate-layout { grid-template-columns: 1fr; }
+  .friends-box { grid-template-columns: 1fr; }
+  .ways-3 { grid-template-columns: 1fr; }
+  .intake-strip { grid-template-columns: 1fr 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .mission-pillars { grid-template-columns: 1fr; }
+  .leader-grid { grid-template-columns: 1fr 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .ways-grid-sm { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="site-nav" id="mainNav">
+  <div class="nav-inner">
+    <div class="nav-logo" onclick="showPage('home')">
+      <div class="logo-mark">P</div>
+      Pacific Autism Center for Education
+    </div>
+    <div class="nav-links">
+      <button class="nav-link" onclick="showPage('about')">About</button>
+      <button class="nav-link" onclick="showPage('programs')">Programs</button>
+      <button class="nav-link" onclick="showPage('resources')">Resources</button>
+      <button class="nav-link" onclick="showPage('getinvolved')">Get Involved</button>
+      <button class="nav-link" onclick="showPage('careers')">Careers</button>
+      <button class="nav-link" onclick="showPage('contact')">Contact</button>
+      <button class="nav-cta" onclick="showPage('donate')">Donate</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════
+     HOME PAGE
+══════════════════════════════════════ -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg-circles">
+      <div class="hero-circle c1"></div>
+      <div class="hero-circle c2"></div>
+      <div class="hero-circle c3"></div>
+      <div class="hero-blob b1"></div>
+      <div class="hero-blob b2"></div>
+    </div>
+    <div class="container">
+      <div class="hero-inner">
+        <div>
+          <div class="hero-eyebrow fade-up">Since 1989 · Santa Clara County</div>
+          <h1 class="fade-up-2">
+            Every ability<br>
+            <span class="accent">leads to a</span><br>
+            <span class="accent-orange">fulfilled life.</span>
+          </h1>
+          <p class="hero-desc fade-up-3">
+            Pacific Autism Center for Education provides exceptional education, behavioral services, and compassionate care for individuals with autism — from preschool through adulthood.
+          </p>
+          <div class="hero-btns fade-up-4">
+            <button class="btn btn--primary" onclick="showPage('programs')">Explore Programs →</button>
+            <button class="btn btn--ghost" onclick="showPage('contact')">Start Enrollment</button>
+          </div>
+          <div class="hero-stats fade-up-4">
+            <div>
+              <div class="hero-stat-val">35+</div>
+              <div class="hero-stat-label">Years of service</div>
+            </div>
+            <div>
+              <div class="hero-stat-val">300+</div>
+              <div class="hero-stat-label">Individuals served</div>
+            </div>
+            <div>
+              <div class="hero-stat-val">4★</div>
+              <div class="hero-stat-label">Charity Navigator</div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-cards">
+          <div class="hero-card">
+            <span class="hero-card-icon">🏫</span>
+            <div class="hero-card-title">PACE School</div>
+            <div class="hero-card-desc">WASC-accredited K–22 special education</div>
+            <span class="hero-card-tag">Ages 6–22</span>
+          </div>
+          <div class="hero-card">
+            <span class="hero-card-icon">☀️</span>
+            <div class="hero-card-title">Sunny Days Preschool</div>
+            <div class="hero-card-desc">Inclusive early childhood program</div>
+            <span class="hero-card-tag">Ages 2½–6</span>
+          </div>
+          <div class="hero-card">
+            <span class="hero-card-icon">🧠</span>
+            <div class="hero-card-title">Faces ABA Services</div>
+            <div class="hero-card-desc">Evidence-based behavior therapy</div>
+            <span class="hero-card-tag">All Ages</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSION STRIP -->
+  <div class="mission-strip">
+    <div class="container">
+      <div class="mission-pillars">
+        <div class="mission-pillar">
+          <div class="mission-pillar-num">01</div>
+          <div class="mission-pillar-word">Connect</div>
+          <div class="mission-pillar-desc">Bridges between families, educators, therapists, and community</div>
+        </div>
+        <div class="mission-pillar">
+          <div class="mission-pillar-num">02</div>
+          <div class="mission-pillar-word">Support</div>
+          <div class="mission-pillar-desc">Individualized care designed around each person's unique needs</div>
+        </div>
+        <div class="mission-pillar">
+          <div class="mission-pillar-num">03</div>
+          <div class="mission-pillar-word">Educate</div>
+          <div class="mission-pillar-desc">Exceptional learning that opens doors to independence</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROGRAMS -->
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Our Programs</span>
+      <h2 style="margin-bottom:10px;">A lifetime of support</h2>
+      <p style="margin-bottom:40px;max-width:560px;">From a child's first school steps to an adult's independence — PACE provides a connected continuum.</p>
+      <div class="programs-grid">
+        <div class="prog-card" onclick="showPage('programs')">
+          <div class="prog-icon-wrap">☀️</div>
+          <div class="prog-ages">Ages 2½–6</div>
+          <div class="prog-name">Sunny Days Preschool</div>
+          <div class="prog-desc">Inclusive early childhood classroom with speech, OT, and special education specialists integrated side-by-side.</div>
+          <div class="prog-arrow">Learn more →</div>
+        </div>
+        <div class="prog-card highlight" onclick="showPage('programs')">
+          <div class="prog-icon-wrap">🏫</div>
+          <div class="prog-ages">Ages 6–22</div>
+          <div class="prog-name">PACE School</div>
+          <div class="prog-desc">WASC-accredited non-public school with individualized education plans and vocational transition programming.</div>
+          <div class="prog-arrow">Learn more →</div>
+        </div>
+        <div class="prog-card" onclick="showPage('programs')">
+          <div class="prog-icon-wrap">🧠</div>
+          <div class="prog-ages">All Ages</div>
+          <div class="prog-name">Faces ABA Services</div>
+          <div class="prog-desc">Evidence-based Applied Behavior Analysis therapy delivered in home, clinic, and community settings.</div>
+          <div class="prog-arrow">Learn more →</div>
+        </div>
+        <div class="prog-card" onclick="showPage('programs')">
+          <div class="prog-icon-wrap">🏠</div>
+          <div class="prog-ages">Adults</div>
+          <div class="prog-name">Residential Services</div>
+          <div class="prog-desc">Supportive community homes with daily living support, skill-building, and meaningful social activities.</div>
+          <div class="prog-arrow">Learn more →</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMPACT STATS -->
+  <section class="section section--sand">
+    <div class="container">
+      <span class="eyebrow">Impact</span>
+      <h2 style="margin-bottom:40px;">Changing lives, every day</h2>
+      <div class="impact-grid">
+        <div class="impact-box">
+          <div class="impact-num">35<span>+</span></div>
+          <div class="impact-label">Years serving Santa Clara County</div>
+        </div>
+        <div class="impact-box">
+          <div class="impact-num">4<span>★</span></div>
+          <div class="impact-label">Charity Navigator rating</div>
+        </div>
+        <div class="impact-box">
+          <div class="impact-num">50<span>+</span></div>
+          <div class="impact-label">Free Porchlight e-learning modules</div>
+        </div>
+        <div class="impact-box">
+          <div class="impact-num"><span>$</span>25</div>
+          <div class="impact-label">Starting monthly gift makes real impact</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT MINI -->
+  <section class="section">
+    <div class="container">
+      <div class="about-grid">
+        <div>
+          <span class="eyebrow">Our Story</span>
+          <h2 style="margin-bottom:20px;">35 years of compassionate care</h2>
+          <p style="margin-bottom:16px;">Founded in 1989, PACE has grown from a small school into a comprehensive organization serving individuals with autism at every stage of life — with WASC accreditation, a 4-star Charity Navigator rating, and a Platinum Candid Seal.</p>
+          <p style="margin-bottom:32px;">Guided by "Connect, Support, Educate," we provide individualized attention, specialized teaching, and compassionate care that promotes independence, lifelong learning, and community integration.</p>
+          <button class="btn btn--outline" onclick="showPage('about')">Read Our Full Story →</button>
+          <div class="accred-badges" style="margin-top:28px;">
+            <div class="accred-badge"><span class="badge-ico">🏅</span>WASC Accredited</div>
+            <div class="accred-badge"><span class="badge-ico">⭐</span>4-Star Charity Navigator</div>
+            <div class="accred-badge"><span class="badge-ico">🔍</span>Platinum Candid</div>
+          </div>
+        </div>
+        <div class="about-visual">
+          <div class="about-card-stack">
+            <div class="about-main-card">
+              <div class="about-year">1989</div>
+              <div class="about-since">Founded in Santa Clara, CA</div>
+              <div class="about-big">35 Years of Purpose</div>
+              <div class="about-sub">Connecting individuals with autism to independence, dignity, and community across Silicon Valley.</div>
+            </div>
+            <div class="about-accent-card">
+              <div class="about-accent-val">501(c)(3)</div>
+              <div class="about-accent-label">EIN 77-0259858 · Tax-deductible giving</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED RESOURCES -->
+  <section class="section section--sand">
+    <div class="container">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:32px;">
+        <div>
+          <span class="eyebrow">Resources</span>
+          <h2>Expert articles for families</h2>
+        </div>
+        <button class="btn btn--outline" onclick="showPage('resources')">View All Articles →</button>
+      </div>
+      <div class="resources-grid">
+        <div class="resource-card" onclick="showPage('resources')">
+          <div class="resource-thumb rt-orange">🍽️</div>
+          <div class="resource-body">
+            <div class="resource-tag">Behavior</div>
+            <div class="resource-title">Children and Food Rigidity</div>
+            <div class="resource-author">Gicele Corpuz, BCBA · 5 min read</div>
+          </div>
+        </div>
+        <div class="resource-card" onclick="showPage('resources')">
+          <div class="resource-thumb rt-blue">🧩</div>
+          <div class="resource-body">
+            <div class="resource-tag">ABA</div>
+            <div class="resource-title">Proactive Antecedent Strategies</div>
+            <div class="resource-author">Alania Sabankaya, RBT · 6 min read</div>
+          </div>
+        </div>
+        <div class="resource-card" onclick="showPage('resources')">
+          <div class="resource-thumb rt-sand">💬</div>
+          <div class="resource-body">
+            <div class="resource-tag">Communication</div>
+            <div class="resource-title">Communicating With Your Child</div>
+            <div class="resource-author">Amelia Lalley, BCBA · 4 min read</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GET INVOLVED -->
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Get Involved</span>
+      <h2 style="margin-bottom:36px;">Join the community behind the mission</h2>
+      <div class="involve-grid">
+        <div class="involve-card ic-blue" onclick="showPage('donate')">
+          <span class="involve-icon">💛</span>
+          <div class="involve-title">Donate</div>
+          <div class="involve-desc">Monthly gifts deliver 5–10× the lifetime value of a one-time contribution. Start at $25/month.</div>
+          <div class="involve-link">Make a gift →</div>
+          <div class="involve-bg-num">$</div>
+        </div>
+        <div class="involve-card ic-orange" onclick="showPage('getinvolved')">
+          <span class="involve-icon">🤝</span>
+          <div class="involve-title">Volunteer</div>
+          <div class="involve-desc">From Golf Classic volunteering to classroom support — find your place in the PACE community.</div>
+          <div class="involve-link">Explore roles →</div>
+          <div class="involve-bg-num">♥</div>
+        </div>
+        <div class="involve-card ic-navy" onclick="showPage('careers')">
+          <span class="involve-icon">🎯</span>
+          <div class="involve-title">Join Our Team</div>
+          <div class="involve-desc">BCBAs, special educators, SLPs, and more. Build a career rooted in genuine purpose.</div>
+          <div class="involve-link">View openings →</div>
+          <div class="involve-bg-num">✦</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <section class="cta-band">
+    <div class="container">
+      <div class="cta-inner">
+        <span class="eyebrow">Ready to Start?</span>
+        <h2>We're here for your family</h2>
+        <p>Whether you're exploring programs for the first time or ready to enroll — our intake team guides you warmly, clearly, and without pressure.</p>
+        <div class="cta-btns">
+          <button class="btn btn--primary" onclick="showPage('contact')">Contact Our Intake Team →</button>
+          <button class="btn btn--ghost" onclick="showPage('programs')">Explore Programs</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand-logo"><div class="footer-logo-mark">P</div><span class="footer-brand-name">Pacific Autism Center for Education</span></div>
+          <p class="footer-tagline">Connecting, supporting, and educating individuals with autism since 1989. Serving Santa Clara County with compassion and excellence.</p>
+          <div class="footer-social">
+            <a class="social-btn" href="#">f</a>
+            <a class="social-btn" href="#">in</a>
+            <a class="social-btn" href="#">𝕏</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Programs</h4>
+          <a onclick="showPage('programs')">PACE School</a>
+          <a onclick="showPage('programs')">Sunny Days</a>
+          <a onclick="showPage('programs')">Faces ABA</a>
+          <a onclick="showPage('programs')">Residential</a>
+          <a onclick="showPage('programs')">Porchlight</a>
+        </div>
+        <div class="footer-col">
+          <h4>Organization</h4>
+          <a onclick="showPage('about')">Our Story</a>
+          <a onclick="showPage('about')">Leadership</a>
+          <a onclick="showPage('careers')">Careers</a>
+          <a onclick="showPage('contact')">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Get Involved</h4>
+          <a onclick="showPage('donate')">Donate</a>
+          <a onclick="showPage('getinvolved')">Volunteer</a>
+          <a onclick="showPage('getinvolved')">Events</a>
+          <a onclick="showPage('getinvolved')">Corporate</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 Pacific Autism Center for Education</span>
+        <span>501(c)(3) · TAX-EIN 77-0259858 · 408.245.3400</span>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════
+     ABOUT PAGE
+══════════════════════════════════════ -->
+<div class="page" id="page-about">
+  <section class="page-hero ph-blue">
+    <div class="ph-deco"></div><div class="ph-deco2"></div>
+    <div class="container">
+      <span class="eyebrow">About PACE</span>
+      <h1>35 years of compassionate care,<br>exceptional education</h1>
+      <p>Founded in 1989, PACE has grown from a small school into a comprehensive organization serving individuals with autism at every stage of life.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;">
+        <div>
+          <span class="eyebrow">Mission & Vision</span>
+          <h2 style="margin-bottom:20px;">A world where every ability leads to a fulfilled life</h2>
+          <p style="margin-bottom:16px;">Our mission is to enhance the lives of people impacted by autism through <strong style="color:var(--navy)">innovation, exceptional education, and compassionate care.</strong></p>
+          <p style="margin-bottom:16px;">Guided by "Connect, Support, Educate," PACE provides individualized attention, specialized teaching, and compassionate care that promotes independence, lifelong learning, and community integration.</p>
+          <p>We serve individuals and families across Santa Clara County through six core programs spanning preschool through adulthood.</p>
+        </div>
+        <div style="background:var(--blue);border-radius:var(--radius-lg);padding:40px;color:#fff;">
+          <div style="font-size:3rem;margin-bottom:16px;">🤝</div>
+          <h3 style="color:#fff;margin-bottom:8px;font-size:1.5rem;">Connect</h3>
+          <p style="color:rgba(255,255,255,.75);margin-bottom:22px;">Building bridges between families, educators, therapists, and community.</p>
+          <h3 style="color:#fff;margin-bottom:8px;font-size:1.5rem;">Support</h3>
+          <p style="color:rgba(255,255,255,.75);margin-bottom:22px;">Providing individualized care designed around each person's unique needs.</p>
+          <h3 style="color:#fff;margin-bottom:8px;font-size:1.5rem;">Educate</h3>
+          <p style="color:rgba(255,255,255,.75);">Creating exceptional learning experiences that open doors to independence.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--sand">
+    <div class="container">
+      <span class="eyebrow">Our Values</span>
+      <h2 style="margin-bottom:32px;">What guides everything we do</h2>
+      <div class="values-grid">
+        <div class="value-card"><div class="value-ico">❤️</div><h4>Compassion</h4><p>Every interaction is guided by genuine empathy and respect for the dignity of each individual and family.</p></div>
+        <div class="value-card"><div class="value-ico">🔬</div><h4>Innovation</h4><p>We apply the latest research in autism education and behavioral science, continually improving our methods.</p></div>
+        <div class="value-card"><div class="value-ico">🌟</div><h4>Excellence</h4><p>WASC accreditation and a 4-star Charity Navigator rating reflect our commitment to the highest standards.</p></div>
+        <div class="value-card"><div class="value-ico">🤲</div><h4>Inclusion</h4><p>Every individual belongs. We design programs that integrate people with autism into their wider community.</p></div>
+        <div class="value-card"><div class="value-ico">🌱</div><h4>Growth</h4><p>We believe in the limitless potential of every person we serve, and design programs to unlock it.</p></div>
+        <div class="value-card"><div class="value-ico">🔗</div><h4>Partnership</h4><p>Families are central partners in every plan. We work with — not just for — the people in our care.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;">
+      <div>
+        <span class="eyebrow">Our Story</span>
+        <h2 style="margin-bottom:32px;">35 years of milestones</h2>
+        <div class="timeline">
+          <div class="timeline-item"><div class="timeline-dot"></div><div class="tl-year">1989</div><h3>PACE Founded</h3><p>Pacific Autism Center for Education opens its doors in Santa Clara, serving a small group of students with autism.</p></div>
+          <div class="timeline-item"><div class="timeline-dot"></div><div class="tl-year">Late 1990s</div><h3>Residential Expansion</h3><p>PACE grows to include residential services, providing supported community living for adults with autism.</p></div>
+          <div class="timeline-item"><div class="timeline-dot"></div><div class="tl-year">2000s</div><h3>ABA Services Launch</h3><p>Faces ABA Behavioral Services launches, extending PACE's reach into evidence-based therapy.</p></div>
+          <div class="timeline-item"><div class="timeline-dot"></div><div class="tl-year">2010s</div><h3>Porchlight & Preschool</h3><p>Sunny Days Preschool opens for ages 2½–6. Porchlight online education series launches nationwide.</p></div>
+          <div class="timeline-item"><div class="timeline-dot"></div><div class="tl-year">2024</div><h3>35th Anniversary</h3><p>PACE celebrates 35 years of impact, earning Platinum Candid transparency and a 4-star Charity Navigator rating.</p></div>
+        </div>
+      </div>
+      <div>
+        <span class="eyebrow">Leadership</span>
+        <h2 style="margin-bottom:28px;">The team behind the mission</h2>
+        <div class="leader-grid">
+          <div class="leader-card"><div class="leader-avatar">ED</div><h4>Executive Director</h4><p>Agency Leadership</p></div>
+          <div class="leader-card"><div class="leader-avatar">DO</div><h4>Director of Operations</h4><p>Agency Leadership</p></div>
+          <div class="leader-card"><div class="leader-avatar">CE</div><h4>Chief of Education</h4><p>PACE School</p></div>
+          <div class="leader-card"><div class="leader-avatar">DC</div><h4>Director of Clinical</h4><p>ABA & Behavioral</p></div>
+        </div>
+        <div style="margin-top:28px;">
+          <span class="eyebrow">Accountability</span>
+          <h2 style="margin-bottom:20px;">Recognized for excellence</h2>
+          <div class="accred-row">
+            <div class="accred-item"><div class="a-ico">🏅</div><div><h4>WASC Accredited</h4><p>Gold standard in school quality</p></div></div>
+            <div class="accred-item"><div class="a-ico">⭐</div><div><h4>4-Star Charity Navigator</h4><p>Financial health & accountability</p></div></div>
+          </div>
+          <div class="accred-row" style="margin-top:12px;">
+            <div class="accred-item"><div class="a-ico">🔍</div><div><h4>Platinum Candid Seal</h4><p>Highest nonprofit transparency</p></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="container"><div class="cta-inner">
+      <span class="eyebrow">Ready?</span>
+      <h2>Support a trusted organization</h2>
+      <p>35 years of accountability, compassion, and measurable impact in Santa Clara County.</p>
+      <div class="cta-btns">
+        <button class="btn btn--primary" onclick="showPage('donate')">Make a Gift →</button>
+        <button class="btn btn--ghost" onclick="showPage('contact')">Contact Us</button>
+      </div>
+    </div></div>
+  </section>
+  <footer class="site-footer"><div class="container"><div class="footer-bottom"><span>© 2025 Pacific Autism Center for Education</span><span>501(c)(3) · TAX-EIN 77-0259858</span></div></div></footer>
+</div>
+
+<!-- ══════════════════════════════════════
+     PROGRAMS PAGE
+══════════════════════════════════════ -->
+<div class="page" id="page-programs">
+  <section class="page-hero ph-teal">
+    <div class="ph-deco"></div><div class="ph-deco2"></div>
+    <div class="container">
+      <span class="eyebrow">Programs & Services</span>
+      <h1>A lifetime of support,<br>tailored to every person</h1>
+      <p>From a child's first steps to an adult's independence — a connected continuum spanning education, behavior, residential life, and beyond.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">The PACE Lifecycle</span>
+      <h2 style="margin-bottom:28px;">Birth through adulthood — we're here</h2>
+      <div class="lifecycle">
+        <div class="lifecycle-step lc1"><span class="lc-icon">🌱</span><div class="lc-age">Ages 2½–6</div><div class="lc-name">Sunny Days Preschool</div></div>
+        <div class="lifecycle-step lc2"><span class="lc-icon">🏫</span><div class="lc-age">Ages 6–22</div><div class="lc-name">PACE School</div></div>
+        <div class="lifecycle-step lc3"><span class="lc-icon">🧠</span><div class="lc-age">All Ages</div><div class="lc-name">Faces ABA</div></div>
+        <div class="lifecycle-step lc4"><span class="lc-icon">🏠</span><div class="lc-age">Adults</div><div class="lc-name">Residential Homes</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--sand">
+    <div class="container">
+      <span class="eyebrow">Program Details</span>
+      <h2 style="margin-bottom:32px;">Explore every program</h2>
+      <div class="prog-details">
+        <div class="prog-detail-card">
+          <div class="prog-icon-big pi-orange">☀️</div>
+          <div>
+            <span class="prog-badge">Early Childhood</span>
+            <h3>Sunny Days Preschool</h3>
+            <p>An inclusive preschool in San Jose serving children with and without developmental disabilities, ages 2½–6. Speech, OT, and special education specialists work side-by-side in integrated classrooms.</p>
+            <div class="prog-tags"><span class="prog-tag">Ages 2½–6</span><span class="prog-tag">Inclusive model</span><span class="prog-tag">897 Broadleaf Ln, San Jose</span><span class="prog-tag">Speech & OT integrated</span></div>
+          </div>
+        </div>
+        <div class="prog-detail-card">
+          <div class="prog-icon-big pi-blue">🏫</div>
+          <div>
+            <span class="prog-badge">K–12 & Transition</span>
+            <h3>PACE School</h3>
+            <p>A WASC-accredited non-public school providing specialized instruction for students ages 6–22 with autism. Small class sizes, individualized education plans, and vocational transition programming.</p>
+            <div class="prog-tags"><span class="prog-tag">Ages 6–22</span><span class="prog-tag">WASC accredited</span><span class="prog-tag">Pruneridge & San Aleso campuses</span><span class="prog-tag">Vocational transition</span></div>
+          </div>
+        </div>
+        <div class="prog-detail-card">
+          <div class="prog-icon-big pi-sand">🧠</div>
+          <div>
+            <span class="prog-badge">ABA Behavioral Services</span>
+            <h3>Faces ABA Behavioral Services</h3>
+            <p>Evidence-based Applied Behavior Analysis therapy for children in home, clinic, and community settings. Faces BCBAs use a trauma-informed, naturalistic approach focused on meaningful outcomes for the whole family.</p>
+            <div class="prog-tags"><span class="prog-tag">Children & families</span><span class="prog-tag">Home & clinic</span><span class="prog-tag">BCBAs on staff</span><span class="prog-tag">Trauma-informed</span></div>
+          </div>
+        </div>
+        <div class="prog-detail-card">
+          <div class="prog-icon-big pi-blue">🏠</div>
+          <div>
+            <span class="prog-badge">Adult Residential</span>
+            <h3>Residential Services</h3>
+            <p>Supportive community homes for adults with autism, offering daily living support, community inclusion, skill-building, and enriching social activities. Our team makes every transition warm and thoughtful.</p>
+            <div class="prog-tags"><span class="prog-tag">Adult residents</span><span class="prog-tag">Community homes</span><span class="prog-tag">Daily living support</span><span class="prog-tag">Community integration</span></div>
+          </div>
+        </div>
+        <div class="prog-detail-card">
+          <div class="prog-icon-big pi-orange">💡</div>
+          <div>
+            <span class="prog-badge">Free E-Learning</span>
+            <h3>Porchlight Autism Education Series</h3>
+            <p>50+ free online learning modules for parents, caregivers, and professionals. Available anytime at porchlighteducation.org — PACE's contribution to the global autism community.</p>
+            <div class="prog-tags"><span class="prog-tag">50+ modules</span><span class="prog-tag">Free access</span><span class="prog-tag">For families & professionals</span><span class="prog-tag">porchlighteducation.org</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:var(--orange);padding:64px 0;">
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
+      <div>
+        <h2 style="color:#fff;margin-bottom:8px;">Ready to enroll or learn more?</h2>
+        <p style="color:rgba(255,255,255,.8);">Our intake team walks you through eligibility, the referral process, and next steps.</p>
+      </div>
+      <div style="display:flex;gap:12px;flex-shrink:0;">
+        <button class="btn btn--white" onclick="showPage('contact')">Contact Intake</button>
+        <button class="btn btn--ghost" onclick="showPage('resources')">Read FAQs</button>
+      </div>
+    </div>
+  </section>
+  <footer class="site-footer"><div class="container"><div class="footer-bottom"><span>© 2025 Pacific Autism Center for Education</span><span>501(c)(3) · TAX-EIN 77-0259858</span></div></div></footer>
+</div>
+
+<!-- ══════════════════════════════════════
+     RESOURCES PAGE
+══════════════════════════════════════ -->
+<div class="page" id="page-resources">
+  <section class="page-hero ph-teal">
+    <div class="ph-deco"></div>
+    <div class="container">
+      <span class="eyebrow">Resources & Insights</span>
+      <h1>Knowledge for families,<br>caregivers & professionals</h1>
+      <p>Expert articles, practical guides, and free e-learning — written by PACE's BCBAs, therapists, and special educators.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Blog — Keeping Up the PACE</span>
+      <h2 style="margin-bottom:20px;">Latest articles</h2>
+      <div class="filter-bar">
+        <button class="filter-chip active">All Topics</button>
+        <button class="filter-chip">Behavior & ABA</button>
+        <button class="filter-chip">Communication</button>
+        <button class="filter-chip">Sensory</button>
+        <button class="filter-chip">Family Life</button>
+        <button class="filter-chip">School</button>
+        <button class="filter-chip">Holidays</button>
+      </div>
+      <div class="art-grid">
+        <div class="art-card"><div class="art-thumb at-orange">🍽️</div><div class="art-body"><div class="art-tag">Behavior</div><div class="art-title">Children and Food Rigidity</div><div class="art-meta">Gicele Corpuz, BCBA · 5 min read</div></div></div>
+        <div class="art-card"><div class="art-thumb at-blue">🧩</div><div class="art-body"><div class="art-tag">ABA</div><div class="art-title">Proactive & Preventative Antecedent Strategies</div><div class="art-meta">Alania Sabankaya, RBT · 6 min read</div></div></div>
+        <div class="art-card"><div class="art-thumb at-purple">💬</div><div class="art-body"><div class="art-tag">Communication</div><div class="art-title">Communicating With Your Child</div><div class="art-meta">Amelia Lalley, BCBA · 4 min read</div></div></div>
+        <div class="art-card"><div class="art-thumb at-green">🔄</div><div class="art-body"><div class="art-tag">ABA</div><div class="art-title">ABA: A New Way Forward</div><div class="art-meta">Nate Virto, BCBA · 7 min read</div></div></div>
+        <div class="art-card"><div class="art-thumb at-orange">🎃</div><div class="art-body"><div class="art-tag">Holidays</div><div class="art-title">Tips for a Happy Halloween</div><div class="art-meta">Sarah Jang, RBT · 4 min read</div></div></div>
+        <div class="art-card"><div class="art-thumb at-blue">🌀</div><div class="art-body"><div class="art-tag">Sensory</div><div class="art-title">Sensory Sensation</div><div class="art-meta">Jessica Mattox, RBT · 5 min read</div></div></div>
+        <div class="art-card"><div class="art-thumb at-sand">🍎</div><div class="art-body"><div class="art-tag">Family Life</div><div class="art-title">Food and Festivities</div><div class="art-meta">Jennie Brevik, RBT · 4 min read</div></div></div>
+        <div class="art-card"><div class="art-thumb at-purple">🌐</div><div class="art-body"><div class="art-tag">Safety</div><div class="art-title">Internet Awareness</div><div class="art-meta">PACE Team · 5 min read</div></div></div>
+        <div class="art-card"><div class="art-thumb at-green">🎟️</div><div class="art-body"><div class="art-tag">ABA</div><div class="art-title">What is a Token Economy System?</div><div class="art-meta">PACE Team · 5 min read</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--sand">
+    <div class="container">
+      <span class="eyebrow">Resource Hub</span>
+      <h2 style="margin-bottom:28px;">Guides, tools & emergency prep</h2>
+      <div class="resource-hub">
+        <div class="rhub-card"><div class="rhub-ico">👨‍👩‍👧</div><div><h3>For Families</h3><p>Curated guides for families navigating diagnosis, school enrollment, insurance, and daily living support.</p><button class="btn btn--outline" onclick="showPage('contact')" style="font-size:.8rem;padding:10px 18px;">View Family Resources</button></div></div>
+        <div class="rhub-card"><div class="rhub-ico">🏥</div><div><h3>For Professionals</h3><p>Referral process guides for SARC coordinators, pediatricians, and school psychologists.</p><button class="btn btn--outline" onclick="showPage('contact')" style="font-size:.8rem;padding:10px 18px;">Professional Resources</button></div></div>
+        <div class="rhub-card"><div class="rhub-ico">🚨</div><div><h3>Emergency Preparedness</h3><p>Visual checklists and preparedness guides for individuals with autism — for wildfires, earthquakes, and more.</p><button class="btn btn--outline" onclick="showPage('contact')" style="font-size:.8rem;padding:10px 18px;">Download Guides</button></div></div>
+        <div class="rhub-card"><div class="rhub-ico">❓</div><div><h3>Frequently Asked Questions</h3><p>Answers to common questions about programs, enrollment, eligibility, funding, and what a typical day looks like.</p><button class="btn btn--outline" onclick="showPage('contact')" style="font-size:.8rem;padding:10px 18px;">Browse FAQs</button></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div style="background:var(--navy);border-radius:var(--radius-lg);padding:48px;display:flex;align-items:center;gap:40px;flex-wrap:wrap;">
+        <div style="font-size:4rem;flex-shrink:0;">💡</div>
+        <div>
+          <h3 style="color:#fff;margin-bottom:10px;">Porchlight Autism Education Series</h3>
+          <p style="color:rgba(255,255,255,.65);margin-bottom:20px;">50+ free online learning modules designed for parents, caregivers, and professionals. Expert-authored, accessible anytime, completely free.</p>
+          <button class="btn btn--primary">Visit Porchlight →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer class="site-footer"><div class="container"><div class="footer-bottom"><span>© 2025 Pacific Autism Center for Education</span><span>501(c)(3) · TAX-EIN 77-0259858</span></div></div></footer>
+</div>
+
+<!-- ══════════════════════════════════════
+     GET INVOLVED PAGE
+══════════════════════════════════════ -->
+<div class="page" id="page-getinvolved">
+  <section class="page-hero ph-blue">
+    <div class="ph-deco"></div>
+    <div class="container">
+      <span class="eyebrow">Get Involved</span>
+      <h1>Join the community<br>behind the mission</h1>
+      <p>Whether you give, volunteer, sponsor, or attend an event — your involvement directly powers PACE's programs.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Ways to Support</span>
+      <h2 style="margin-bottom:28px;">Find the right fit for you</h2>
+      <div class="ways-3">
+        <div class="way-card-big"><div class="way-header wh-blue">💛</div><div class="way-body"><h3>Donate</h3><p>Monthly donors provide 5–10× the lifetime value of a one-time gift and help PACE plan for the long term.</p><button class="btn btn--primary" onclick="showPage('donate')">Make a Gift</button></div></div>
+        <div class="way-card-big"><div class="way-header wh-orange">🤝</div><div class="way-body"><h3>Volunteer</h3><p>From classroom support to Golf Classic volunteering — meaningful ways to give your time, no background required.</p><button class="btn btn--outline" onclick="showPage('contact')">Explore Volunteer Roles</button></div></div>
+        <div class="way-card-big"><div class="way-header wh-navy">🏢</div><div class="way-body"><h3>Corporate Giving</h3><p>Sponsor the Golf Classic, set up employee matching, or make a corporate grant with meaningful recognition.</p><button class="btn btn--outline" onclick="showPage('contact')">Corporate Inquiry</button></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--sand">
+    <div class="container"><div class="friends-box">
+      <div>
+        <span class="eyebrow" style="color:rgba(255,255,255,.6);">Monthly Giving</span>
+        <h2>Friends of PACE</h2>
+        <p>Join our community of committed monthly donors who sustain PACE's programs year-round. Recurring gifts are the most impactful contribution you can make.</p>
+        <button class="btn btn--white" onclick="showPage('donate')">Become a Friend of PACE</button>
+      </div>
+      <div>
+        <div style="margin-bottom:24px;"><div class="friends-stat">5–10×</div><div class="friends-stat-label">Lifetime value vs. one-time gift</div></div>
+        <div style="margin-bottom:24px;"><div class="friends-stat">$25+</div><div class="friends-stat-label">Starting monthly gift</div></div>
+        <div><div class="friends-stat">Cancel</div><div class="friends-stat-label">Anytime, no questions asked</div></div>
+      </div>
+    </div></div>
+  </section>
+
+  <section class="section">
+    <div class="container" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;">
+      <div>
+        <span class="eyebrow">Events</span>
+        <h2 style="margin-bottom:28px;">Upcoming PACE events</h2>
+        <div class="events-list">
+          <div class="event-row"><div class="event-date"><span class="ev-month">Jun</span><span class="ev-day">9</span></div><div class="event-info"><h4>2026 Golf Classic</h4><p>Annual charity golf tournament — PACE's signature fundraiser. Sponsors welcome.</p></div><span class="event-type">Fundraiser</span></div>
+          <div class="event-row"><div class="event-date"><span class="ev-month">Apr</span><span class="ev-day">1</span></div><div class="event-info"><h4>Autism Acceptance Month</h4><p>April activities, awareness events, and fundraising throughout the month.</p></div><span class="event-type">Awareness</span></div>
+          <div class="event-row"><div class="event-date"><span class="ev-month">Sep</span><span class="ev-day">TBD</span></div><div class="event-info"><h4>Back to School Celebration</h4><p>Welcome families and supporters for the new school year.</p></div><span class="event-type">Community</span></div>
+          <div class="event-row"><div class="event-date"><span class="ev-month">Dec</span><span class="ev-day">TBD</span></div><div class="event-info"><h4>Year-End Donor Celebration</h4><p>A thank-you event for our generous donors and community partners.</p></div><span class="event-type">Donor Event</span></div>
+        </div>
+      </div>
+      <div>
+        <span class="eyebrow">Volunteer</span>
+        <h2 style="margin-bottom:24px;">Give your time</h2>
+        <p style="margin-bottom:24px;">One-time event or ongoing commitment — PACE has a volunteer opportunity that fits your schedule.</p>
+        <div class="vol-grid">
+          <div class="vol-card"><span class="vol-icon">🏌️</span><h4>Golf Classic</h4><p>Event day volunteering for our annual fundraiser.</p></div>
+          <div class="vol-card"><span class="vol-icon">📚</span><h4>Classroom</h4><p>Support teachers and students in PACE School classrooms.</p></div>
+          <div class="vol-card"><span class="vol-icon">🎉</span><h4>Events</h4><p>Help set up, run, and break down community events.</p></div>
+          <div class="vol-card"><span class="vol-icon">👩‍💼</span><h4>Professional</h4><p>Offer skills in marketing, design, legal, or finance.</p></div>
+          <div class="vol-card"><span class="vol-icon">🌐</span><h4>Youth Leaders</h4><p>Youth Leadership Committee for high school and college students.</p></div>
+          <div class="vol-card"><span class="vol-icon">🤲</span><h4>Community</h4><p>Outreach and awareness activities in the broader community.</p></div>
+        </div>
+        <div style="margin-top:20px;"><button class="btn btn--outline" onclick="showPage('contact')">Sign Up to Volunteer</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="container"><div class="cta-inner">
+      <span class="eyebrow">Legacy Giving</span>
+      <h2>Leave a lasting legacy</h2>
+      <p>A gift in your will or trust ensures PACE's programs continue to change lives. It's a profound act of generosity that requires no cash today.</p>
+      <div class="cta-btns"><button class="btn btn--primary" onclick="showPage('contact')">Learn About Legacy Giving</button></div>
+    </div></div>
+  </section>
+  <footer class="site-footer"><div class="container"><div class="footer-bottom"><span>© 2025 Pacific Autism Center for Education</span><span>501(c)(3) · TAX-EIN 77-0259858</span></div></div></footer>
+</div>
+
+<!-- ══════════════════════════════════════
+     CAREERS PAGE
+══════════════════════════════════════ -->
+<div class="page" id="page-careers">
+  <section class="page-hero" style="background:linear-gradient(140deg,#111c28 0%,var(--navy) 60%,#2e4460 100%);">
+    <div class="ph-deco"></div>
+    <div class="container">
+      <span class="eyebrow">Join Our Team</span>
+      <h1>Do work that matters,<br>every single day</h1>
+      <p>PACE is hiring BCBAs, special educators, therapists, and support staff who want to build careers rooted in genuine purpose.</p>
+      <div style="display:flex;gap:14px;margin-top:28px;">
+        <a href="#openings" class="btn btn--primary">View Open Positions</a>
+        <a href="#culture" class="btn btn--ghost">Our Culture</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="culture">
+    <div class="container">
+      <span class="eyebrow">Why PACE</span>
+      <h2 style="margin-bottom:28px;">A place where your work changes lives</h2>
+      <div class="culture-grid">
+        <div class="culture-card"><span class="cult-ico">🎯</span><h4>Clear Purpose</h4><p>Every role at PACE connects directly to outcomes for individuals with autism.</p></div>
+        <div class="culture-card"><span class="cult-ico">📈</span><h4>Career Growth</h4><p>Supervision hours, tuition support, and pathways from RBT to BCBA and beyond.</p></div>
+        <div class="culture-card"><span class="cult-ico">🤝</span><h4>Collaborative Teams</h4><p>Interdisciplinary teams of educators, BCBAs, speech therapists, and OTs.</p></div>
+        <div class="culture-card"><span class="cult-ico">🏅</span><h4>Recognition</h4><p>Staff appreciation programs, peer recognition, and annual awards.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--sand">
+    <div class="container" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;">
+      <div>
+        <span class="eyebrow">Benefits</span>
+        <h2 style="margin-bottom:20px;">Compensation built for whole-life wellbeing</h2>
+        <p style="margin-bottom:24px;">PACE offers a comprehensive package designed to support you financially, professionally, and personally.</p>
+        <button class="btn btn--primary" onclick="showPage('contact')">Apply Now</button>
+      </div>
+      <div class="benefits-grid">
+        <div class="benefit-row"><span class="benefit-ico">💊</span><span>Medical, dental & vision insurance</span></div>
+        <div class="benefit-row"><span class="benefit-ico">🏖️</span><span>Generous PTO & paid holidays</span></div>
+        <div class="benefit-row"><span class="benefit-ico">🎓</span><span>Tuition reimbursement</span></div>
+        <div class="benefit-row"><span class="benefit-ico">📚</span><span>Supervision hours for BCBA candidates</span></div>
+        <div class="benefit-row"><span class="benefit-ico">💰</span><span>Competitive salaries + annual reviews</span></div>
+        <div class="benefit-row"><span class="benefit-ico">🏋️</span><span>Wellness programs & EAP</span></div>
+        <div class="benefit-row"><span class="benefit-ico">🌱</span><span>Professional development funding</span></div>
+        <div class="benefit-row"><span class="benefit-ico">📍</span><span>Multiple Bay Area locations</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="openings">
+    <div class="container">
+      <span class="eyebrow">Open Positions</span>
+      <h2 style="margin-bottom:8px;">Current openings</h2>
+      <p style="margin-bottom:32px;max-width:540px;">We're growing to meet the demand for high-quality autism services in Santa Clara County.</p>
+      <div class="job-card"><div><div class="job-dept">ABA Services — Faces</div><h3>Board Certified Behavior Analyst (BCBA)</h3><div class="job-tags"><span class="job-tag">Full-time</span><span class="job-tag">San Jose, CA</span><span class="job-tag">$85K–$105K</span></div></div><button class="apply-btn" onclick="showPage('contact')">Apply →</button></div>
+      <div class="job-card"><div><div class="job-dept">PACE School</div><h3>Special Education Teacher</h3><div class="job-tags"><span class="job-tag">Full-time</span><span class="job-tag">Santa Clara, CA</span><span class="job-tag">School Year</span></div></div><button class="apply-btn" onclick="showPage('contact')">Apply →</button></div>
+      <div class="job-card"><div><div class="job-dept">ABA Services — Faces</div><h3>Registered Behavior Technician (RBT)</h3><div class="job-tags"><span class="job-tag">Full-time & Part-time</span><span class="job-tag">San Jose, CA</span><span class="job-tag">Entry Level</span></div></div><button class="apply-btn" onclick="showPage('contact')">Apply →</button></div>
+      <div class="job-card"><div><div class="job-dept">Sunny Days Preschool</div><h3>Inclusive Preschool Teacher / Paraeducator</h3><div class="job-tags"><span class="job-tag">Full-time</span><span class="job-tag">San Jose, CA</span><span class="job-tag">Early Childhood</span></div></div><button class="apply-btn" onclick="showPage('contact')">Apply →</button></div>
+      <div class="job-card"><div><div class="job-dept">Residential Services</div><h3>Residential Program Specialist</h3><div class="job-tags"><span class="job-tag">Full-time</span><span class="job-tag">Santa Clara County</span><span class="job-tag">Adults</span></div></div><button class="apply-btn" onclick="showPage('contact')">Apply →</button></div>
+      <div class="job-card"><div><div class="job-dept">Clinical Services</div><h3>Speech-Language Pathologist (SLP)</h3><div class="job-tags"><span class="job-tag">Full-time</span><span class="job-tag">Multiple Sites</span><span class="job-tag">All Ages</span></div></div><button class="apply-btn" onclick="showPage('contact')">Apply →</button></div>
+      <div class="quote-strip">
+        <blockquote>"The most rewarding job I've ever had. You see progress every single day — small milestones that mean the world to the families."</blockquote>
+        <cite>— PACE BCBA, 6 years on staff</cite>
+      </div>
+    </div>
+  </section>
+  <footer class="site-footer"><div class="container"><div class="footer-bottom"><span>© 2025 Pacific Autism Center for Education</span><span>501(c)(3) · TAX-EIN 77-0259858</span></div></div></footer>
+</div>
+
+<!-- ══════════════════════════════════════
+     CONTACT PAGE
+══════════════════════════════════════ -->
+<div class="page" id="page-contact">
+  <section class="page-hero ph-teal">
+    <div class="ph-deco"></div>
+    <div class="container">
+      <span class="eyebrow">Contact & Intake</span>
+      <h1>We're here for your family</h1>
+      <p>Whether you're exploring programs for the first time or ready to begin enrollment — our intake team will guide you warmly, clearly, and without pressure.</p>
+    </div>
+  </section>
+
+  <section class="section section--sand">
+    <div class="container">
+      <span class="eyebrow">The Path to Enrollment</span>
+      <h2 style="margin-bottom:24px;">How to get started with PACE</h2>
+      <div class="intake-strip">
+        <div class="intake-step is1"><div class="is-num">Step 1</div><h4>Reach Out</h4><p>Fill out our intake form or call the program most relevant to your family.</p></div>
+        <div class="intake-step is2"><div class="is-num">Step 2</div><h4>Intake Call</h4><p>Our team schedules a call to discuss program fit and eligibility.</p></div>
+        <div class="intake-step is3"><div class="is-num">Step 3</div><h4>Site Visit</h4><p>Tour our facilities and meet the staff where your child would thrive.</p></div>
+        <div class="intake-step is4"><div class="is-num">Step 4</div><h4>Enrollment</h4><p>Complete funding authorization and set a start date.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container contact-layout">
+      <div>
+        <span class="eyebrow">Intake Form</span>
+        <h2 style="margin-bottom:8px;">Tell us about your family</h2>
+        <p style="margin-bottom:28px;max-width:500px;">Use this form to get started with any PACE program. We'll follow up within one business day.</p>
+        <div class="contact-form">
+          <div class="form-row">
+            <div class="field-group"><label>Your first name *</label><input type="text" placeholder="First name"></div>
+            <div class="field-group"><label>Your last name *</label><input type="text" placeholder="Last name"></div>
+          </div>
+          <div class="form-row">
+            <div class="field-group"><label>Email address *</label><input type="email" placeholder="you@email.com"></div>
+            <div class="field-group"><label>Phone number</label><input type="tel" placeholder="(408) 000-0000"></div>
+          </div>
+          <div class="field-group">
+            <label>Program of interest *</label>
+            <select>
+              <option value="">Select a program...</option>
+              <option>PACE School (ages 6–22)</option>
+              <option>Sunny Days Preschool (ages 2½–6)</option>
+              <option>Faces ABA Behavioral Services</option>
+              <option>Residential Services (adults)</option>
+              <option>Other / Not sure yet</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="field-group"><label>Child or client's age</label><input type="text" placeholder="Age or date of birth"></div>
+            <div class="field-group"><label>Current school / provider (if any)</label><input type="text" placeholder="Optional"></div>
+          </div>
+          <div class="field-group">
+            <label>Tell us a bit about your situation</label>
+            <textarea placeholder="A few sentences is great — share any context that would help us prepare."></textarea>
+          </div>
+          <button class="submit-btn">Submit Intake Form →</button>
+          <p style="font-size:.75rem;color:var(--grey);">We respect your privacy. Your information is only used to follow up on your inquiry.</p>
+        </div>
+      </div>
+      <div>
+        <span class="eyebrow">Our Locations</span>
+        <h3 style="margin-bottom:20px;font-size:1.1rem;">Reach us by phone or visit</h3>
+        <div class="loc-card"><h4>🏢 PACE Admin / Pruneridge Campus</h4><p>1880 Pruneridge Avenue<br>Santa Clara, CA 95050</p><div class="loc-phone">408.245.3400</div></div>
+        <div class="loc-card"><h4>🏫 San Aleso Campus</h4><p>824 San Aleso Avenue<br>Sunnyvale, CA 94085</p><div class="loc-phone">408.625.6199</div></div>
+        <div class="loc-card"><h4>☀️ Sunny Days Preschool</h4><p>897 Broadleaf Lane<br>San Jose, CA 95128</p><div class="loc-phone">408.625.6198</div></div>
+        <div class="loc-card"><h4>🧠 Faces ABA Behavioral Services</h4><p>897 Broadleaf Lane<br>San Jose, CA 95128</p><div class="loc-phone">408.785.0102</div></div>
+        <div style="margin-top:20px;padding:24px;background:var(--blue-pale);border-radius:var(--radius-lg);">
+          <h4 style="margin-bottom:8px;color:var(--navy);">Referral professionals</h4>
+          <p style="font-size:.84rem;margin-bottom:12px;">SARC coordinators, pediatricians, and school psychologists can email or call the main office to discuss the referral process.</p>
+          <div style="font-size:.85rem;font-weight:700;color:var(--blue-deeper);">admin@pacificautism.org</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer class="site-footer"><div class="container"><div class="footer-bottom"><span>© 2025 Pacific Autism Center for Education</span><span>501(c)(3) · TAX-EIN 77-0259858</span></div></div></footer>
+</div>
+
+<!-- ══════════════════════════════════════
+     DONATE PAGE
+══════════════════════════════════════ -->
+<div class="page" id="page-donate">
+  <section class="page-hero ph-orange">
+    <div class="ph-deco"></div>
+    <div class="container">
+      <span class="eyebrow" style="color:rgba(255,255,255,.7);">Make a Gift</span>
+      <h1>Every gift moves a<br>family forward</h1>
+      <p>PACE is a 501(c)(3) nonprofit serving individuals with autism from preschool through adulthood. Your donation funds programs that change lives.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container donate-layout">
+      <div>
+        <h2 style="margin-bottom:24px;">Make your gift today</h2>
+        <div class="freq-tabs">
+          <button class="freq-tab active" id="monthlyTab" onclick="setFreq('monthly')">Give Monthly</button>
+          <button class="freq-tab" id="onceTab" onclick="setFreq('once')">Give Once</button>
+        </div>
+        <div class="amount-grid">
+          <button class="amount-btn" onclick="setAmt(this,'$25')">$25</button>
+          <button class="amount-btn selected" onclick="setAmt(this,'$50')">$50</button>
+          <button class="amount-btn" onclick="setAmt(this,'$100')">$100</button>
+          <button class="amount-btn" onclick="setAmt(this,'$250')">$250</button>
+          <button class="amount-btn" onclick="setAmt(this,'$500')">$500</button>
+          <button class="amount-btn" onclick="setAmt(this,'$1,000')">$1,000</button>
+        </div>
+        <input class="custom-amt" type="text" placeholder="Or enter a custom amount ($)">
+        <button class="donate-cta" id="donateCta">Donate $50/month →</button>
+        <div class="trust-row">
+          <div class="trust-badge">🔒 Secure SSL encryption</div>
+          <div class="trust-badge">⭐ 4-Star Charity Navigator</div>
+          <div class="trust-badge">🧾 Tax deductible 501(c)(3)</div>
+        </div>
+        <p style="font-size:.78rem;color:var(--grey);margin-top:14px;">Monthly donors deliver 5–10× the lifetime value of a one-time gift. Cancel anytime.</p>
+      </div>
+      <div class="impact-sidebar">
+        <h3>Your gift at work</h3>
+        <div class="impact-row"><div class="imp-amt">$25</div><div class="imp-desc"><h4>Classroom supplies</h4><p>One week of art and sensory materials for a PACE School student.</p></div></div>
+        <div class="impact-row"><div class="imp-amt">$50</div><div class="imp-desc"><h4>Therapy session</h4><p>A speech or OT session for a child at Sunny Days.</p></div></div>
+        <div class="impact-row"><div class="imp-amt">$100</div><div class="imp-desc"><h4>Family resources</h4><p>Porchlight modules for five families for a full month.</p></div></div>
+        <div class="impact-row"><div class="imp-amt">$500</div><div class="imp-desc"><h4>Residential support</h4><p>One week of daily living support for an adult resident.</p></div></div>
+        <div class="impact-row"><div class="imp-amt">$1,000</div><div class="imp-desc"><h4>Program scholarship</h4><p>Supplemental funding for a student whose services exceed DDS funding.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="stats-strip">
+    <div class="stat-block"><span class="stat-num">4★</span><span class="stat-label">Charity Navigator</span></div>
+    <div class="stat-block"><span class="stat-num">100%</span><span class="stat-label">Mission Allocation</span></div>
+    <div class="stat-block"><span class="stat-num">Platinum</span><span class="stat-label">Candid Seal</span></div>
+    <div class="stat-block"><span class="stat-num">501c3</span><span class="stat-label">Tax Deductible</span></div>
+  </div>
+
+  <section class="section section--sand">
+    <div class="container">
+      <span class="eyebrow">More Ways to Give</span>
+      <h2 style="margin-bottom:32px;">Support PACE your way</h2>
+      <div class="ways-grid-sm">
+        <div class="way-sm-card"><span class="way-sm-ico">🏢</span><h3>Corporate Giving</h3><p>Sponsorship tiers, employee matching, and corporate grants for the annual Golf Classic.</p><button class="btn btn--outline" onclick="showPage('getinvolved')">Corporate Inquiry</button></div>
+        <div class="way-sm-card"><span class="way-sm-ico">📜</span><h3>Legacy Giving</h3><p>Include PACE in your estate plan. A gift in your will ensures our programs endure for generations.</p><button class="btn btn--outline" onclick="showPage('getinvolved')">Learn About Legacy</button></div>
+        <div class="way-sm-card"><span class="way-sm-ico">🛍️</span><h3>PACE Merch Store</h3><p>Shop PACE branded gear on Bonfire. Every purchase supports our mission and spreads awareness.</p><button class="btn btn--outline">Visit Store</button></div>
+      </div>
+    </div>
+  </section>
+  <footer class="site-footer"><div class="container"><div class="footer-bottom"><span>© 2025 Pacific Autism Center for Education</span><span>501(c)(3) Non-Profit · TAX-EIN 77-0259858</span></div></div></footer>
+</div>
+
+<script>
+let currentAmt = '$50';
+let currentFreq = 'monthly';
+
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  const map = { home:'', about:'About', programs:'Programs', resources:'Resources', getinvolved:'Get Involved', careers:'Careers', contact:'Contact', donate:'' };
+  document.querySelectorAll('.nav-link').forEach(l => {
+    if(l.textContent.trim() === map[id]) l.classList.add('active');
+  });
+  window.scrollTo(0, 0);
+}
+
+function setAmt(btn, amt) {
+  document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  currentAmt = amt;
+  updateDonateBtn();
+}
+
+function setFreq(freq) {
+  currentFreq = freq;
+  document.getElementById('monthlyTab').classList.toggle('active', freq === 'monthly');
+  document.getElementById('onceTab').classList.toggle('active', freq === 'once');
+  updateDonateBtn();
+}
+
+function updateDonateBtn() {
+  const cta = document.getElementById('donateCta');
+  if(cta) cta.textContent = 'Donate ' + currentAmt + (currentFreq === 'monthly' ? '/month' : '') + ' →';
+}
+
+// Filter chips
+document.querySelectorAll('.filter-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    chip.closest('.filter-bar').querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+  });
+});
+
+// Nav scroll effect
+window.addEventListener('scroll', () => {
+  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 20);
+});
+
+// Smooth counter animation for stats
+function animateCounters() {
+  document.querySelectorAll('.impact-num').forEach(el => {
+    el.style.opacity = '0';
+    setTimeout(() => { el.style.opacity = '1'; el.style.transition = 'opacity .5s'; }, 100);
+  });
+}
+</script>
+</body>
+</html>
